@@ -23,6 +23,7 @@ struct Fapostr6rm5z92RxVRLB: View {
   @State private var d6J4nMklzcbnwMi: String = ""
   @State private var zejK3vZt6UwLW8: UIImage?
   @State private var PynFBnyzjS8hNk: Bool = false
+  @State private var k4WzPageToastMsg: String?
 
   var body: some View {
     CreatejLlpeiC5nAUAvPScaffold(
@@ -57,6 +58,19 @@ struct Fapostr6rm5z92RxVRLB: View {
     .imageSourcePicker(
       isPresented: $PynFBnyzjS8hNk, onImagePicked: { zejK3vZt6UwLW8 = $0 }
     )
+    .overlay(alignment: .center) {
+      if let msg = k4WzPageToastMsg {
+        Text(msg)
+          .font(.custom("Hanchansans-Medium", size: 15))
+          .foregroundColor(.black)
+          .padding(.horizontal, 20)
+          .padding(.vertical, 12)
+          .background(Capsule().fill(Color(hex: "#CBED40")))
+          .padding(.bottom, 20)
+          .transition(.opacity.combined(with: .move(edge: .top)))
+      }
+    }
+    .animation(.easeInOut(duration: 0.25), value: k4WzPageToastMsg)
     #if DEBUG
       .enableInjection()
     #endif
@@ -97,27 +111,34 @@ struct Fapostr6rm5z92RxVRLB: View {
   }
 
   private var OXNuMhFGbYNLVy: some View {
-    TextEditor(text: $d6J4nMklzcbnwMi)
-      .font(.custom("Hanchansans-Medium", size: 16))
-      .foregroundColor(.white)
-      .scrollContentBackground(.hidden)
-      .padding(.horizontal, 12)
-      .padding(.vertical, 10)
-      .frame(minHeight: 100)
-      .frame(maxWidth: .infinity)
-      .background(
-        RoundedRectangle(cornerRadius: 16, style: .continuous)
-          .fill(Color.black.opacity(0.7))
-      )
-      .overlay(alignment: .topLeading) {
-        if d6J4nMklzcbnwMi.isEmpty {
-          Text("A wonderful description is more likely to attract attention.")
-            .font(.custom("Hanchansans-Medium", size: 16))
-            .foregroundColor(.white.opacity(0.6))
-            .padding(16)
-            .allowsHitTesting(false)
+    VStack(alignment: .leading, spacing: 16) {
+      Text("Description")
+        .font(.custom("Hanchansans-Medium", size: 24))
+        .foregroundColor(.white)
+
+      TextEditor(text: $d6J4nMklzcbnwMi)
+        .font(.custom("Hanchansans-Medium", size: 16))
+        .foregroundColor(.black)
+        .scrollContentBackground(.hidden)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .frame(minHeight: 100)
+        .frame(maxWidth: .infinity)
+        .background(
+          RoundedRectangle(cornerRadius: 16, style: .continuous)
+            .fill(Color.white)
+        )
+        .overlay(alignment: .topLeading) {
+          if d6J4nMklzcbnwMi.isEmpty {
+            Text("A wonderful description is more likely to attract attention.")
+              .font(.custom("Hanchansans-Medium", size: 16))
+              .foregroundColor(.gray.opacity(0.6))
+              .padding(16)
+              .allowsHitTesting(false)
+          }
         }
-      }
+    }
+
   }
 
   private var c7RsMbLMgrA6Rbk: some View {
@@ -163,15 +184,24 @@ struct Fapostr6rm5z92RxVRLB: View {
     }
   }
 
-  private var kbCVqER9snQuJo: Bool {
-    zejK3vZt6UwLW8 != nil
-      && !d6J4nMklzcbnwMi.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+  private func n8VpShowPageToast(_ text: String) {
+    k4WzPageToastMsg = text
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+      k4WzPageToastMsg = nil
+    }
   }
 
   private func prepoXvvE8MQ6JPsEV9() {
-    guard kbCVqER9snQuJo else { return }
-
+    if zejK3vZt6UwLW8 == nil {
+      n8VpShowPageToast("Please add a photo.")
+      return
+    }
     let axUu4LI97kUfkq = d6J4nMklzcbnwMi.trimmingCharacters(in: .whitespacesAndNewlines)
+    if axUu4LI97kUfkq.isEmpty {
+      n8VpShowPageToast("Please enter a description.")
+      return
+    }
+
     let cIqmDpTf1TAreg = Array(Z5EbpBeVBJoAYC).sorted()
     var YWAJ88uS14p8rf = "test"
     if let x0cQq4HXQxEmhc = zejK3vZt6UwLW8,
